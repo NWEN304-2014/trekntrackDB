@@ -87,6 +87,7 @@ function saveuser(user,callback){
 	
 	query.on("end",function(){
 		clinet.end();
+		callback(null);
 	});
 	query.on("error",function(error){
 		console.log(error);
