@@ -26,7 +26,7 @@ rc.then(function (tname,rc){
 		}
 		
 	}
-}
+});
 
 function checkTable(tablename, callback){
 	var deferred = new $.Deferred();
