@@ -1,0 +1,28 @@
+{
+  "name": "node-authentication",
+  "main": "server.js",
+  "description": "Local username and password authentication strategy for Passport.",
+  
+  "author": {
+    "name": "Chanikarn Prakunkorn",
+    "email": "prakunchan@myvuw.ac.nz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xyz2130/trekntrackDB.git"
+  },
+  
+  "dependencies" : {	
+    "passport" : "~0.1.17", 		
+    "passport-local" : "~0.1.6", 	
+    "connect-flash" : "~0.1.1", 
+	"express": "^3.5.1",
+    "pg": "^3.0.3",
+	"bcrypt-nodejs" : "latest"	
+  },
+
+  "engines": {
+    "node": "0.10.26"
+  }
+  
+}
