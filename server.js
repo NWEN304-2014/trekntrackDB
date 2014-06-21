@@ -15,7 +15,7 @@ var client = new pg.Client(connectionString);
 // configuration ===============================================================
 //client.connect(); // connect to our database
 
-// require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 app.configure(function() {
 

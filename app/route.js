@@ -14,7 +14,18 @@ module.exports = function(app, passport) {
 	// =====================================
 
 	// process the signup form
-	// app.post('/signup', do all our passport stuff here);
+	app.post('/signup', function(req,res,next){
+		passport.authenticate('local-signup', function(err,user,info){
+			if(err) {return next(err);}
+			if(!user){req.session.messages = [info.message]; return res.send('redirectSignup');}
+			req.logIn(user,function(err) {
+				if(err){return next(err);}
+				console.log(JSON.stringify(user));
+				return res.send('redirectProfile');
+			});
+		})(req,res,next);
+	});
+
 
 	// =====================================
 	// PROFILE SECTION =====================
