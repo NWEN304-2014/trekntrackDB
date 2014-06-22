@@ -8,7 +8,9 @@ client = new pg.Client(connectionString);
 client.connect();
 
 
-var rc = checkTable('users',null);
+var rc = checkTable('users',function(tname,rowcount){
+	return rowcount;
+});
 var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
 //rc.then(function (tname,rc){
 	if(rc==0){
@@ -35,7 +37,7 @@ function checkTable(tablename, callback){
 		client.end();
 		//console.log(JSON.stringify(result));
 		callback(tablename,result.rowCount);
-		deferred.resolve();
+	//	deferred.resolve();
 	});
 	//return deferred.promise();
 }
