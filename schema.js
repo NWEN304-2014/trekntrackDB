@@ -37,7 +37,7 @@ checkTable('users',function(rc){
 
 	function checkTable(tablename,callback){
 		var q = client.query("select tablename from pg_catalog.pg_tables where tablename = $1",[tablename]);
-		client.connect()
+		// client.connect()
 		q.on('error',function (err){
 			console.log(err);
 			// client.end();
