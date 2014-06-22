@@ -21,14 +21,14 @@ function checkTable(tablename){
 	q.on('row',function(row,result){
 		console.log(JSON.stringify(row));
 	});
-	q.on('end', function(result){
+	q.on('end', (function(result){
 		client.end();
 		console.log(JSON.stringify(result));
 		if(result.rowCount==0){
-	console.log('no such table exists');
-	var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
-	console.log(pw);
-	console.log(JSON.stringify(result.fields));
+		console.log('no such table exists');
+		var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
+		console.log(pw);
+		console.log(JSON.stringify(result.fields));
 		if(result.fields.name == 'users'){
 		client.connect();
 			var query = client.query("CREATE TABLE users("+
@@ -52,6 +52,6 @@ function checkTable(tablename){
 	}
 	//	deferred.resolve();
 	client.end();
-	});
+	})(tablename));
 	//return deferred.promise();
 }
