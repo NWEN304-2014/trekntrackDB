@@ -15,7 +15,7 @@ client.connect();
 checkTable('users');
 function checkTable(tablename){
 	//var deferred = new $.Deferred();
-	var q = client.query("SELECT relname from pg_class where relname = $1",[tablename]);
+	var q = client.query("SELECT relname from pg_class where relname = '$1'",[tablename]);
 	q.on('end', function(result){
 		client.end();
 		//console.log(JSON.stringify(result));
