@@ -12,7 +12,7 @@ checkTable('users',function(rc){
 		
 		console.log('creating table');
 		var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
-		var query = client.query("CREATE TABLE users("+
+		var str = "CREATE TABLE users("+
 							"user_id serial PRIMARY KEY,"+
 							"name text NOT NULL, "+
 							"email text NOT NULL, "+
@@ -20,7 +20,8 @@ checkTable('users',function(rc){
 							"bio text "+
 							");"+
 							"INSERT INTO users (name, email, password)"+
-							" VALUES ('admin','admin', '$1');", [pw]);
+							" VALUES ('admin','admin', '$1');";
+		var query = client.query(str, [pw]);
 
 		query.on('error',function(err){
 			console.log(err);
