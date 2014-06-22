@@ -23,7 +23,7 @@ function checkTable(tablename){
 	console.log('no such table exists');
 	var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
 
-		if(tname == 'users'){
+		if(result.fields.name == 'users'){
 			query = client.query("CREATE TABLE users("+
 								"user_id serial PRIMARY KEY,"+
 								"name text NOT NULL, "+
