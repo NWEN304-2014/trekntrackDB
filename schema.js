@@ -10,7 +10,7 @@ client.connect();
 
 var rc = checkTable('users',null);
 var pw = bcrypt.hashSync('admin', bcrypt.getSaltSync(8),null);
-rc.then(function (tname,rc){
+//rc.then(function (tname,rc){
 	if(rc==0){
 	console.log('no such table exists');
 		if(tname == 'users'){
@@ -26,10 +26,10 @@ rc.then(function (tname,rc){
 		}
 		
 	}
-});
+//});
 
 function checkTable(tablename, callback){
-	var deferred = new $.Deferred();
+	//var deferred = new $.Deferred();
 	var q = client.query("SELECT relname from pg_class where relname = $1",[tablename]);
 	q.on('end', function(result){
 		client.end();
@@ -37,5 +37,5 @@ function checkTable(tablename, callback){
 		callback(tablename,result.rowCount);
 		deferred.resolve();
 	});
-	return deferred.promise();
+	//return deferred.promise();
 }
