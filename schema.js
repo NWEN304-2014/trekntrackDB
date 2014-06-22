@@ -19,6 +19,9 @@ function checkTable(tablename){
 	q.on('error',function (err){
 		console.log(err);
 	});
+	q.on('row',function(row,result){
+		console.log(JSON.stringify(row));
+	});
 	q.on('end', function(result){
 		client.end();
 		console.log(JSON.stringify(result));
