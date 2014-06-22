@@ -5,7 +5,7 @@ var LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
 var User       		= require('../model/user');
-
+var useR = new user();
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
@@ -22,7 +22,7 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+        useR.findById(id, function(err, user) {
             if(err){
 				console.log(err);
 			}
@@ -49,7 +49,7 @@ module.exports = function(passport) {
 
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-        User.findone('email',email, function(err, user) {
+        useR.findone('email',email, function(err, user) {
             // if there are any errors, return the error
             if (err == true){
                 return done(err);
@@ -61,7 +61,7 @@ module.exports = function(passport) {
 
 				// if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                var newUser            = new user();
 
                 // set the user's local credentials
 				newUser.name 	 = req.body.name;
