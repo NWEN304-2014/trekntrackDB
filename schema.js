@@ -15,7 +15,7 @@ client.connect();
 checkTable('users');
 function checkTable(tablename){
 	//var deferred = new $.Deferred();
-	var q = client.query("select count(*) from pg_catalog.pg_database where datname = $1",[tablename]);
+	var q = client.query("select count(*) from pg_catalog.pg_tables where tablename = $1",[tablename]);
 	q.on('error',function (err){
 		console.log(err);
 	});
