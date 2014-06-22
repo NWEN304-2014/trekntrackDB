@@ -10,6 +10,8 @@ client.connect();
 checkTable('users',function(rc){
 	if(rc!=null && rc == 0){
 		client.connect();
+		console.log('creating table');
+		var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
 		var query = client.query("CREATE TABLE users("+
 							"user_id serial PRIMARY KEY,"+
 							"name text NOT NULL, "+

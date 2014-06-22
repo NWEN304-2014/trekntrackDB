@@ -18,7 +18,7 @@ function user(i,n,e,pw) {
 // methods ======================
 // generating a hash
 function generatehash(password){
-	return bcrypt.hashSync(password, bcrypt.getSaltSync(8),null);
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(8),null);
 }
 function validpassword(password){
 	return bcrypt.compareSync(password,this.password);
