@@ -8,6 +8,7 @@ var port     = process.env.PORT;
 var pg 		 = require('pg').native;
 var passport = require('passport');
 var flash 	 = require('connect-flash');
+var cors	 = require('./app/config/cors');
 
 var connectionString = process.env.DATABASE_URL;
 var client = new pg.Client(connectionString);
@@ -29,6 +30,7 @@ app.configure(function() {
 	app.use(passport.initialize());
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash()); // use connect-flash for flash messages stored in session
+	app.use(cors); //set response header for CORS
 
 });
 

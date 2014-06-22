@@ -12,7 +12,7 @@ function user(i,n,e,pw) {
 	this.validPassword = validpassword;
 	this.tojsonstring = toJson;
 	this.findById = findbyid;
-	this.fineOne = findone;
+	this.findOne = findone;
 	this.save = saveuser;
 }
 // methods ======================
