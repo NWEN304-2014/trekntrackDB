@@ -23,7 +23,7 @@ function checkTable(tablename){
 		console.log(JSON.stringify(row));
 	});
 	q.on('end', function(result){
-		client.end();
+		
 		console.log(JSON.stringify(result));
 		if(result.rowCount==0){
 	console.log('no such table exists');
@@ -44,6 +44,7 @@ function checkTable(tablename){
 		
 	}
 	//	deferred.resolve();
+	client.end();
 	});
 	//return deferred.promise();
 }
