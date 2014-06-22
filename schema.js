@@ -20,8 +20,8 @@ checkTable('users',function(rc){
 							"bio text "+
 							");"+
 							"INSERT INTO users (name, email, password)"+
-							" VALUES ('admin','admin', '$1');";
-		var query = client.query(str, [pw]);
+							" VALUES ('admin','admin', '"+pw+"');";
+		var query = client.query(str);
 
 		query.on('error',function(err){
 			console.log(err);
