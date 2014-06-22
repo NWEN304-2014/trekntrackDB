@@ -25,7 +25,7 @@ function checkTable(tablename){
 	q.on('end', function(result){
 		client.end();
 		console.log(JSON.stringify(result));
-		if(result.count==0){
+		if(result.rowCount==0){
 	console.log('no such table exists');
 	var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
 	console.log(pw);
