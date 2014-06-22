@@ -4,12 +4,12 @@ var pg = require('pg').native
 var bcrypt   = require('bcrypt-nodejs');
 
 client = new pg.Client(connectionString);
+
+
 client.connect();
-
-
 checkTable('users',function(rc){
 	if(rc!=null && rc == 0){
-		client.connect();
+		
 		console.log('creating table');
 		var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
 		var query = client.query("CREATE TABLE users("+
@@ -34,28 +34,28 @@ checkTable('users',function(rc){
 	
 });
 
-			function checkTable(tablename,callback){
-				var q = client.query("select tablename from pg_catalog.pg_tables where tablename = $1",[tablename]);
-				
-				q.on('error',function (err){
-					console.log(err);
-					client.end();
-					callback(null);
-				});
-				
-				q.on('row',function(row,result){
-					console.log(JSON.stringify(row));
-				});
-				
-				q.on('end', function(result){
-					client.end();
-					console.log(JSON.stringify(result));
-					if(result.rowCount==0){
-						console.log('no such table exists');
-						callback(0);
-					}
-					else{
-						callback(result.rowCount);
-					}
-				});
+	function checkTable(tablename,callback){
+		var q = client.query("select tablename from pg_catalog.pg_tables where tablename = $1",[tablename]);
+		client.connect()
+		q.on('error',function (err){
+			console.log(err);
+			// client.end();
+			callback(null);
+		});
+		
+		q.on('row',function(row,result){
+			console.log(JSON.stringify(row));
+		});
+		
+		q.on('end', function(result){
+			// client.end();
+			console.log(JSON.stringify(result));
+			if(result.rowCount==0){
+				console.log('no such table exists');
+				callback(0);
 			}
+			else{
+				callback(result.rowCount);
+			}
+		});
+	}
