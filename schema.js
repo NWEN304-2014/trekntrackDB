@@ -9,7 +9,7 @@ client.connect();
 
 
 var rc = checkTable('users',null);
-var pw = bcrypt.hashSync('admin', bcrypt.getSaltSync(8),null);
+var pw = bcrypt.hashSync('admin', bcrypt.genSaltSync(8),null);
 //rc.then(function (tname,rc){
 	if(rc==0){
 	console.log('no such table exists');
