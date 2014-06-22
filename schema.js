@@ -1,7 +1,6 @@
 var pg = require('pg').native
   , connectionString = process.env.DATABASE_URL
-  , client
-  , query;
+  , client;
 var bcrypt   = require('bcrypt-nodejs');
 
 client = new pg.Client(connectionString);
@@ -23,7 +22,7 @@ function checkTable(tablename){
 		console.log(JSON.stringify(row));
 	});
 	q.on('end', function(result){
-		
+		client.end();
 		console.log(JSON.stringify(result));
 		if(result.rowCount==0){
 	console.log('no such table exists');
@@ -31,7 +30,8 @@ function checkTable(tablename){
 	console.log(pw);
 	console.log(JSON.stringify(result.fields));
 		if(result.fields.name == 'users'){
-			query = client.query("CREATE TABLE users("+
+		client.connect();
+			var query = client.query("CREATE TABLE users("+
 								"user_id serial PRIMARY KEY,"+
 								"name text NOT NULL, "+
 								"email text NOT NULL, "+
@@ -40,6 +40,13 @@ function checkTable(tablename){
 								");"+
 								"INSERT INTO users (name, email, password)"+
 								" VALUES ('admin','admin', '$1');", [pw]);
+			query.on('error',function(err){
+				console.log(err);
+			});
+			query.on('end',function(result){
+				console.log('after create table '+JSON.stringify(result));
+				client.end();
+			});
 		}
 		
 	}
