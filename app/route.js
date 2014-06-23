@@ -32,7 +32,7 @@ app.all('*',function(req,res,next){
 	// process the signup form
 	app.post('/signup', function(req,res,next){
 			// passport.authenticate('local-signup', function(err, user, info) {
-			console.log(JSON.stringify(req));
+			console.log(JSON.stringify(req.body));
 				// if (err) { return next(err) } 
 				// if (!user) { 
 					// req.session.messages =  [info.message]; 
