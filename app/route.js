@@ -41,7 +41,7 @@ app.all('*',function(req,res,next){
 				}    
 				req.logIn(user, function(err) {  
 				if (err) { return next(err); }      
-					return res.jsonp(user+'redirectProfile');    
+					return res.send(user);    
 				});
 			})(req, res, next);
 			// res.send("post message return");
