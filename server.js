@@ -41,15 +41,16 @@ app.configure(function() {
 
 });
 
+
+// routes ======================================================================
+require('./app/route.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
 //enable cross-domain-sharing
 app.all('*',function(req,res,next){
 	res.header("Access-Control-Allow-Origin","*");
 	res.header("Access-Control-Allow-Headers","X-Requested-With");
 	next();
 });
-
-// routes ======================================================================
-require('./app/route.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
 db.sequelize.sync({force: true}).complete(function(err) {
