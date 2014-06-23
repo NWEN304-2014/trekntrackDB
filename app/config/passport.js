@@ -65,9 +65,11 @@ module.exports = function(passport) {
 					// save the user
 					newUser.save()
 						.success(function(justsaved){
+							console.log(JSON.stringify(justsaved));
 							return done(null,justsaved);
 						})
 						.error(function(error){
+							console.log(JSON.stringify(error));
 							return done(err);
 						});
 					// newUser.save(function(err) {

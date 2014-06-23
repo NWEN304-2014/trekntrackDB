@@ -31,8 +31,9 @@ app.all('*',function(req,res,next){
 	
 	// process the signup form
 	app.post('/signup', function(req,res,next){
+			console.log('body '+JSON.stringify(req.body));
 			passport.authenticate('local-signup', function(err, user, info) {
-			console.log(JSON.stringify(req.body));
+			
 				if (err) { return next(err);} 
 				if (!user) { 
 					req.session.messages =  [info.message]; 
