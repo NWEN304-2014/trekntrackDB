@@ -20,6 +20,7 @@ module.exports = function(app, passport) {
 	
 	//show signup form
 	app.get('/signup',function(req,res){
+	console.log('GET signup');
 		res.json("some message");
 	});
 	
