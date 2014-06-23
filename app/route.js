@@ -1,7 +1,12 @@
 // app/routes.js
 module.exports = function(app, passport) {
 
-	
+	//enable cross-domain-sharing
+app.all('*',function(req,res,next){
+	res.header("Access-Control-Allow-Origin","*");
+	res.header("Access-Control-Allow-Headers","X-Requested-With");
+	next();
+});
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -21,7 +26,7 @@ module.exports = function(app, passport) {
 	//show signup form
 	app.get('/signup',function(req,res){
 	console.log('GET signup');
-		res.json("some message");
+		res.jsonp("some message");
 	});
 	
 	// process the signup form
