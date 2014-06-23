@@ -55,19 +55,26 @@ module.exports = function(passport) {
 
 					// if there is no user with that email
 					// create the user
-					var newUser            = new User();
+					var newUser = User.build({
+						name: req.body.name,
+						email: email,
+						password: User.generateHash(password);
+					});
 
-					// set the user's local credentials
-					newUser.name 	 = req.body.name;
-					newUser.email    = email;
-					newUser.password = newUser.generateHash(password);
 
 					// save the user
-					newUser.save(function(err) {
-						if (err)
+					newUser.save()
+						.success(function(justsaved){
+							return done(null,justsaved);
+						})
+						.error(function(error){
 							return done(err);
-						return done(null, newUser);
-					});
+						});
+					// newUser.save(function(err) {
+						// if (err)
+							// return done(err);
+						// return done(null, newUser);
+					// });
 				}
 
 			}).error(function (err){    
