@@ -33,16 +33,17 @@ app.all('*',function(req,res,next){
 	app.post('/signup', function(req,res,next){
 			// passport.authenticate('local-signup', function(err, user, info) {
 			console.log(JSON.stringify(req));
-				if (err) { return next(err) } 
-				if (!user) { 
-					req.session.messages =  [info.message]; 
-					return res.jsonp('redirectLogin');
-				}    
-				req.logIn(user, function(err) {  
-				if (err) { return next(err); }      
-					return res.jsonp('index');    
-				});
+				// if (err) { return next(err) } 
+				// if (!user) { 
+					// req.session.messages =  [info.message]; 
+					// return res.jsonp('redirectLogin');
+				// }    
+				// req.logIn(user, function(err) {  
+				// if (err) { return next(err); }      
+					// return res.jsonp('index');    
+				// });
 			// })(req, res, next);
+			res.send("post message return");
 	});
 
 
