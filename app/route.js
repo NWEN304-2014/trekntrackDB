@@ -17,7 +17,21 @@ app.all('*',function(req,res,next){
 	});
 	
 	// process the login form
-	// app.post('/login', do all our passport stuff here);
+	app.post('/login', function(req,res,next){
+			// console.log('body '+JSON.stringify(req.body));
+			passport.authenticate('local-signup', function(err, user, info) {
+			
+				if (err) { return next(err);} 
+				if (!user) { 
+					req.session.messages =  [info.message]; 
+					return res.jsonp('redirectSignin');
+				}    
+				req.logIn(user, function(err) {  
+				if (err) { return next(err); }      
+					return res.send(user);    
+				});
+			})(req, res, next);
+	});
 
 	// =====================================
 	// SIGNUP ==============================
@@ -31,13 +45,13 @@ app.all('*',function(req,res,next){
 	
 	// process the signup form
 	app.post('/signup', function(req,res,next){
-			console.log('body '+JSON.stringify(req.body));
+			// console.log('body '+JSON.stringify(req.body));
 			passport.authenticate('local-signup', function(err, user, info) {
 			
 				if (err) { return next(err);} 
 				if (!user) { 
 					req.session.messages =  [info.message]; 
-					return res.jsonp('redirectLogin');
+					return res.jsonp('redirectSignup');
 				}    
 				req.logIn(user, function(err) {  
 				if (err) { return next(err); }      
