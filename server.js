@@ -23,7 +23,7 @@ require('./app/config/passport')(passport); // pass passport for configuration
 app.configure(function() {
 	
 	app.set('port',port);
-	
+	app.use(express.static(__dirname));
 	// set up our express application
 	app.use(express.logger('dev')); // log every request to the console
 	app.use(express.cookieParser()); // read cookies (needed for auth)
@@ -31,13 +31,14 @@ app.configure(function() {
 	app.use(express.urlencoded()); // get information from html forms
 	
 	// app.use(express.methodOverride());
-	app.use(express.static(__dirname));
-	app.use(app.router); //make REST invocation to get files
-
+	
+	
 	// required for passport
 	app.use(express.session({ secret: 'trekntrackbyunknownparkfornwen304' })); // session secret
 	app.use(passport.initialize());
 	app.use(passport.session()); // persistent login sessions
+	app.use(app.router); //make REST invocation to get files
+
 	app.use(flash()); // use connect-flash for flash messages stored in session
 
 });
