@@ -4,8 +4,8 @@
 var LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
-var User       		= require('../model/user');
-var useR = new User();
+var models       		= require('../model');
+var User = models.User;
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
@@ -22,14 +22,13 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        useR.findById(id, function(err, user) {
-            if(err){
-				console.log(err);
-			}
-			done(err, user);
-			
-        });
-    });
+        User.find({where: {id: id}})
+			.success(function (user){
+				done(null,user);
+			}).error(function (err){
+				done(err,null);
+			});
+	});
 
  	// =========================================================================
     // LOCAL SIGNUP ============================================================
@@ -43,43 +42,37 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
-        // asynchronous
-        // User.findOne wont fire unless data is sent back
-        process.nextTick(function() {
-
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-        useR.findone('email',email, function(err, user) {
-            // if there are any errors, return the error
-            if (err == true){
-                return done(err);
-			}
-            // check to see if theres already a user with that email
-            else if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
+        User.find({where: {email: email}})
+			.success(function (user) {
+				// check to see if theres already a user with that email
+				if (user) {
+					return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+				} else {
 
-				// if there is no user with that email
-                // create the user
-                var newUser            = new User();
+					// if there is no user with that email
+					// create the user
+					var newUser            = new User();
 
-                // set the user's local credentials
-				newUser.name 	 = req.body.name;
-                newUser.email    = email;
-                newUser.password = newUser.generateHash(password);
+					// set the user's local credentials
+					newUser.name 	 = req.body.name;
+					newUser.email    = email;
+					newUser.password = newUser.generateHash(password);
 
-				// save the user
-                newUser.save(function(err) {
-                    if (err)
-                        return done(err);
-                    return done(null, newUser);
-                });
-            }
+					// save the user
+					newUser.save(function(err) {
+						if (err)
+							return done(err);
+						return done(null, newUser);
+					});
+				}
 
-        });    
-
-        });
+			}).error(function (err){    
+				done(err);
+			});
 
     }));
-
+	
 };
+
