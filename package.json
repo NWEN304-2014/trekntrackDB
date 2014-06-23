@@ -14,8 +14,8 @@
     "express": "^3.11.0",
     "pg": "^3.0.3",
     "bcrypt-nodejs": ">= 0.0.0",
-    "logfmt": "^1.1.2"
-	"sequelize": "*",
+    "logfmt": "^1.1.2",
+	"sequelize": "*"
   },
   "engines": {
     "node": "0.10.26"
