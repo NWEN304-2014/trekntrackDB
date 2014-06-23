@@ -19,7 +19,7 @@ app.all('*',function(req,res,next){
 	// process the login form
 	app.post('/login', function(req,res,next){
 			// console.log('body '+JSON.stringify(req.body));
-			passport.authenticate('local-signup', function(err, user, info) {
+			passport.authenticate('local-login', function(err, user, info) {
 			
 				if (err) { return next(err);} 
 				if (!user) { 
