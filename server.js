@@ -2,12 +2,13 @@
 
 // set up ======================================================================
 // get all the tools we need
+var flash 	 = require('connect-flash');
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT;
 var pg 		 = require('pg').native;
 var passport = require('passport');
-var flash 	 = require('connect-flash');
+
 var cors	 = require('./app/config/cors');
 var db		 = require('./app/model');
 // var http	 = require('http');
@@ -35,11 +36,12 @@ app.configure(function() {
 	
 	// required for passport
 	app.use(express.session({ secret: 'trekntrackbyunknownparkfornwen304' })); // session secret
+	app.use(flash()); // use connect-flash for flash messages stored in session
 	app.use(passport.initialize());
 	app.use(passport.session()); // persistent login sessions
 	app.use(app.router); //make REST invocation to get files
 
-	app.use(flash()); // use connect-flash for flash messages stored in session
+	
 
 });
 
