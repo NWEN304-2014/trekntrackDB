@@ -29,7 +29,7 @@ app.configure(function() {
 	app.use(express.cookieParser()); // read cookies (needed for auth)
 	app.use(express.bodyParser()); // get information from html forms
 	
-	app.use(express.methodOverride());
+	// app.use(express.methodOverride());
 	app.use(express.static(__dirname));
 	app.use(app.router); //make REST invocation to get files
 
