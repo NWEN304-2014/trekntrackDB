@@ -23,7 +23,7 @@ app.all('*',function(req,res,next){
 	// SIGNUP ==============================
 	// =====================================
 	
-	//show signup form
+	//for testing
 	app.get('/signup',function(req,res){
 	console.log('GET signup');
 		res.jsonp("some message");
@@ -31,19 +31,19 @@ app.all('*',function(req,res,next){
 	
 	// process the signup form
 	app.post('/signup', function(req,res,next){
-			// passport.authenticate('local-signup', function(err, user, info) {
+			passport.authenticate('local-signup', function(err, user, info) {
 			console.log(JSON.stringify(req.body));
-				// if (err) { return next(err) } 
-				// if (!user) { 
-					// req.session.messages =  [info.message]; 
-					// return res.jsonp('redirectLogin');
-				// }    
-				// req.logIn(user, function(err) {  
-				// if (err) { return next(err); }      
-					// return res.jsonp('index');    
-				// });
-			// })(req, res, next);
-			res.send("post message return");
+				if (err) { return next(err);} 
+				if (!user) { 
+					req.session.messages =  [info.message]; 
+					return res.jsonp('redirectLogin');
+				}    
+				req.logIn(user, function(err) {  
+				if (err) { return next(err); }      
+					return res.jsonp('index');    
+				});
+			})(req, res, next);
+			// res.send("post message return");
 	});
 
 
