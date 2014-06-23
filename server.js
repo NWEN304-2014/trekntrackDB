@@ -52,11 +52,11 @@ app.all('*',function(req,res,next){
 require('./app/route.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-db.sequelize.sync().complete(function(err) {
+db.sequelize.sync({force: true}).complete(function(err) {
   if (err) {
     throw err[0];
   } else {
-	var user = db.User.create({ name: 'admin', email: 'admin', password: db.User.generateHash('admin')});
+	var user = db.User.build({ name: 'admin', email: 'admin', password: db.User.generateHash('admin')});
 	
     app.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'));
