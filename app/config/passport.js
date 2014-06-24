@@ -38,27 +38,27 @@ module.exports = function(passport) {
 
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-		usernameField : 'email',
+		usernameField : 'username',
 		passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, email, password, done) {
+    function(req, username, password, done) {
 
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-        User.find({where: {email: email}})
+        User.find({where: {username: username}})
 			.success(function (user) {
 				// check to see if theres already a user with that email
 				if (user) {
-					console.log('email already taken');
-					return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+					console.log('username already taken');
+					return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
 				} else {
 
 					// if there is no user with that email
 					// create the user
 					var newUser = User.build({
-						name: req.body.name,
-						email: email,
+						username: username,
+						email: req.body.email,
 						password: User.generateHash(password)
 					});
 
@@ -90,15 +90,15 @@ module.exports = function(passport) {
 
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
+        usernameField : 'username',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, email, password, done) { // callback with email and password from our form
+    function(req, username, password, done) { // callback with email and password from our form
 
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-         User.find({where: {email: email}})
+         User.find({where: {username: username}})
 			.success(function (user) {
             // if no user is found, return the message
             if (!user)

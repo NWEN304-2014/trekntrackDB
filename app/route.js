@@ -22,7 +22,7 @@ app.all('*',function(req,res,next){
 			passport.authenticate('local-login', function(err, user, info) {
 			
 				if (err) { return next(err);} 
-				if (!user) { 
+				if (user == false) { 
 					req.session.messages =  [info.message]; 
 					return res.jsonp('redirectSignin');
 				}    
