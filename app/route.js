@@ -24,7 +24,7 @@ app.all('*',function(req,res,next){
 				if (err) { return next(err);} 
 				if (user == false) { 
 					req.session.messages =  [info.message]; 
-					return res.jsonp('redirectSignin');
+					return res.jsonp(info.message);
 				}    
 				req.logIn(user, function(err) {  
 				if (err) { return next(err); }      
