@@ -37,31 +37,30 @@ module.exports = function(passport) {
 	// by default, if there was no name, it would just be called 'local'
 
     passport.use('local-signup', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
+        // by default, local strategy uses username and password
 		usernameField : 'username',
 		passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, username, password, done) {
 
-		// find a user whose email is the same as the forms email
+		// find a user whose username is the same as the forms username
 		// we are checking to see if the user trying to login already exists
         User.find({where: {username: username}})
 			.success(function (user) {
-				// check to see if theres already a user with that email
+				// check to see if theres already a user with that username, can override with any field name that is to be used for login name
 				if (user) {
 					console.log('username already taken');
 					return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
 				} else {
 
-					// if there is no user with that email
+					// if there is no user with that username
 					// create the user
 					var newUser = User.build({
 						username: username,
 						email: req.body.email,
 						password: User.generateHash(password)
 					});
-
 
 					// save the user
 					newUser.save()
@@ -82,23 +81,27 @@ module.exports = function(passport) {
 
     }));
 	
- // =========================================================================
+    // =========================================================================
     // LOCAL LOGIN =============================================================
     // =========================================================================
 	// we are using named strategies since we have one for login and one for signup
 	// by default, if there was no name, it would just be called 'local'
 
     passport.use('local-login', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
+        // by default, local strategy uses username and password, can override with any field name that is to be used for login name
         usernameField : 'username',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, username, password, done) { // callback with email and password from our form
-console.log(username+' '+password);
-		// find a user whose email is the same as the forms email
+    function(req, username, password, done) { // callback with username and password from our form
+		console.log('check logging in with 'username+': '+password);
+		// find a user whose username is the same as the forms username
 		// we are checking to see if the user trying to login already exists
-         User.find({where: {username: username}})
+         //the return param position are to be processed in route.js
+		 //(param1, param2, param3) : param1 is for error, 
+		 //							  param2 false is for failed to logged in, user object is for successfully logged in
+		 //							  param3 for flash return message (not tested)
+		 User.find({where: {username: username}})
 			.success(function (user) {
             // if no user is found, return the message
             if (!user){
@@ -114,9 +117,6 @@ console.log(username+' '+password);
 			// if there are any errors, return the error before anything else			
 				done(err);
 			});
-
-            
-        
 
     }));
 

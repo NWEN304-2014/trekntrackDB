@@ -57,12 +57,14 @@ app.all('*',function(req,res,next){
 });
 
 // launch ======================================================================
-db.sequelize.sync({force: true}).complete(function(err) {
+//after successfully creating database, start the express server
+db.sequelize.sync({force:true}).complete(function(err) {
   if (err) {
     throw err[0];
   } else {
-	var user = db.User.build({ name: 'admin', email: 'admin', password: db.User.generateHash('admin')});
-	
+    //seed database
+	var user = db.User.build({ username: 'admin', email: 'admin', password: db.User.generateHash('admin')});
+	//start server
     app.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'));
     });

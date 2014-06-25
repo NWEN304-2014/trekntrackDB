@@ -2,6 +2,7 @@
 var connectionString = process.env.DATABASE_URL;
 var match = connectionString.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
 
+//connect to database
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(match[5], match[1], match[2],{
 		dialect: 'postgres',
@@ -10,6 +11,8 @@ var sequelize = new Sequelize(match[5], match[1], match[2],{
 		host:	match[3]
 });
 
+//load the tables by models
+//the table names are <modelname>s, e.g. table name for User is Users
 if(!global.hasOwnProperty('db')){
 	
 	global.db = {
